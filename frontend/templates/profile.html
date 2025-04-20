@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Noctra</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      .profile-pic {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #ddd;
+      }
+      .menu-icon,
+      .user-icon {
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .logo {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 2px;
+      }
+      .profile-section {
+        padding: 20px;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .card h2 {
+        margin-top: 0;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .form-group input {
+        width: 90%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: inherit;
+      }
+      .form-group select {
+        width: 100%;
+        background-color: white;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: inherit;
+      }
+      .add-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      /* Navigation Drawer Styles */
+      .nav-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 150px;
+        background-color: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+      }
+      .nav-drawer.open {
+        transform: translateX(0);
+      }
+      .nav-drawer a {
+        display: block;
+        padding: 10px 0;
+        color: #333;
+        text-decoration: none;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        display: none;
+      }
+      .overlay.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="menu-icon" onclick="toggleDrawer()">☰</div>
+      <a href="index.html">
+        <div class="logo">
+          <img
+            src="../static/img/image.png"
+            alt="Noctra Logo"
+            style="height: 30px"
+          />
+        </div>
+      </a>
+      <a href="profile.html">
+        <div class="user-icon">
+          <img
+            src="../static/img/Jessica_Alba.jpg"
+            alt="Jessica"
+            class="profile-pic"
+          />
+        </div>
+      </a>
+    </header>
+
+    <!-- Navigation Drawer -->
+    <div id="navDrawer" class="nav-drawer">
+      <a href="index.html">Overview</a>
+      <a href="activity.html">Activity</a>
+      <a href="profile.html">Profile</a>
+      <a href="upload.html">Upload</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleDrawer()"></div>
+
+    <div class="profile-section">
+      <h1>Jessica's Account</h1>
+
+      <div class="card">
+        <h2>Brian's Profile</h2>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" value="Brian" />
+        </div>
+        <div class="form-group">
+          <label for="age">Age (weeks)</label>
+          <input type="number" id="age" value="5" />
+        </div>
+        <div class="form-group">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" value="8.5" />
+        </div>
+        <div class="form-group">
+          <label for="mental">Pre-existing Mental Conditions:</label>
+          <select id="mental" name="mental">
+            <option value="none">None</option>
+            <option value="developmental_delay">Developmental Delay</option>
+            <option value="cerebral_palsy">Cerebral Palsy</option>
+            <option value="autism_spectrum_disorder">
+              Autism Spectrum Disorder
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="heart">Pre-existing Heart Conditions:</label>
+          <select id="heart" name="heart">
+            <option value="none">None</option>
+            <option value="congenital_heart_defect">
+              Congenital Heart Defect
+            </option>
+            <option value="arrhythmia">Arrhythmia</option>
+            <option value="cardiomyopathy">Cardiomyopathy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="lung">Pre-existing Lung Conditions:</label>
+          <select id="lung" name="lung">
+            <option value="none">None</option>
+            <option value="asthma">Asthma</option>
+            <option value="bronchopulmonary_dysplasia">
+              Bronchopulmonary Dysplasia
+            </option>
+            <option value="cystic_fibrosis">Cystic Fibrosis</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="add-button">Add Child</button>
+    </div>
+
+    <script>
+      function toggleDrawer() {
+        const drawer = document.getElementById("navDrawer");
+        const overlay = document.getElementById("overlay");
+        const isOpen = drawer.classList.contains("open");
+
+        if (isOpen) {
+          drawer.classList.remove("open");
+          overlay.classList.remove("show");
+        } else {
+          drawer.classList.add("open");
+          overlay.classList.add("show");
+        }
+      }
+    </script>
+  </body>
+</html>

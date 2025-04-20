@@ -33,7 +33,7 @@
         top: 0;
         left: 0;
         height: 100%;
-        width: 250px;
+        width: 150px;
         background-color: #fff;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         padding: 20px;
@@ -63,6 +63,12 @@
       .overlay.show {
         display: block;
       }
+      .profile-pic {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
       .activity-container {
         padding: 20px;
       }
@@ -86,15 +92,30 @@
   <body>
     <header>
       <div class="menu-icon" onclick="toggleDrawer()">☰</div>
-      <div class="logo">Noctra</div>
-      <div class="user-icon">
-        <img src="path/to/jessica.jpg" alt="Jessica" class="profile-pic" />
-      </div>
+      <a href="index.html">
+        <div class="logo">
+          <img
+            src="../static/img/image.png"
+            alt="Noctra Logo"
+            style="height: 30px"
+          /></div
+      ></a>
+      <a href="profile.html">
+        <div class="user-icon">
+          <img
+            src="../static/img/Jessica_Alba.jpg"
+            alt="Jessica"
+            class="profile-pic"
+          />
+        </div>
+      </a>
     </header>
 
     <div id="navDrawer" class="nav-drawer">
       <a href="index.html">Overview</a>
       <a href="activity.html">Activity</a>
+      <a href="profile.html">Profile</a>
+      <a href="upload.html">Upload</a>
     </div>
     <div id="overlay" class="overlay" onclick="toggleDrawer()"></div>
 

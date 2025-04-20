@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noctra - Activity Log</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #ddd;
+      }
+      .menu-icon,
+      .user-icon {
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .logo {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+      .nav-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        background-color: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+      }
+      .nav-drawer.open {
+        transform: translateX(0);
+      }
+      .nav-drawer a {
+        display: block;
+        padding: 10px 0;
+        color: #333;
+        text-decoration: none;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        display: none;
+      }
+      .overlay.show {
+        display: block;
+      }
+      .activity-container {
+        padding: 20px;
+      }
+      .card {
+        background-color: #fff;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .card h3 {
+        margin: 0 0 8px 0;
+      }
+      .card p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="menu-icon" onclick="toggleDrawer()">☰</div>
+      <div class="logo">Noctra</div>
+      <div class="user-icon">
+        <img src="path/to/jessica.jpg" alt="Jessica" class="profile-pic" />
+      </div>
+    </header>
+
+    <div id="navDrawer" class="nav-drawer">
+      <a href="index.html">Overview</a>
+      <a href="activity.html">Activity</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleDrawer()"></div>
+
+    <div class="activity-container">
+      <div class="card">
+        <h3>Unsafe position detected</h3>
+        <p>April 19, 2025 - 02:14 AM</p>
+      </div>
+      <div class="card">
+        <h3>Unsafe position detected</h3>
+        <p>April 18, 2025 - 11:37 PM</p>
+      </div>
+    </div>
+
+    <script>
+      function toggleDrawer() {
+        const drawer = document.getElementById("navDrawer");
+        const overlay = document.getElementById("overlay");
+        drawer.classList.toggle("open");
+        overlay.classList.toggle("show");
+      }
+    </script>
+  </body>
+</html>

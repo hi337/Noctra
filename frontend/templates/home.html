@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noctra - Infant Monitor</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      .profile-pic {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #ddd;
+      }
+      .menu-icon,
+      .user-icon {
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .logo {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 2px;
+      }
+      .welcome {
+        padding: 20px;
+        font-size: 1.2rem;
+      }
+      .video-box {
+        margin: 0 20px;
+        background-color: #e0e0e0;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+      }
+      .stats {
+        margin: 20px;
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .stats h2 {
+        margin-top: 0;
+      }
+      .stat-item {
+        margin-bottom: 10px;
+      }
+      @media (max-width: 600px) {
+        .video-box {
+          height: 150px;
+        }
+      }
+
+      /* Navigation Drawer Styles */
+      .nav-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 150px;
+        background-color: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+      }
+
+      .nav-drawer.open {
+        transform: translateX(0);
+      }
+
+      .nav-drawer a {
+        display: block;
+        padding: 10px 0;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        display: none;
+      }
+
+      .overlay.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="menu-icon" onclick="toggleDrawer()">☰</div>
+      <a href="home.html">
+        <div class="logo">
+          <img
+            src="../static/img/image.png"
+            alt="Noctra Logo"
+            style="height: 30px"
+          /></div
+      ></a>
+      <a href="profile.html">
+        <div class="user-icon">
+          <img
+            src="../static/img/Jessica_Alba.jpg"
+            alt="Jessica"
+            class="profile-pic"
+          />
+        </div>
+      </a>
+    </header>
+
+    <!-- Navigation Drawer -->
+    <div id="navDrawer" class="nav-drawer">
+      <a href="home.html">Overview</a>
+      <a href="activity.html">Activity</a>
+      <a href="profile.html">Profile</a>
+      <a href="upload.html">Upload</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleDrawer()"></div>
+
+    <div class="welcome">Welcome back, Jessica!</div>
+    <div class="video-box">
+      <img
+        src="http://10.0.0.213:5000/video_feed"
+        style="width: 100%; border-radius: 10px"
+      />
+    </div>
+    <div class="stats">
+      <h2>Brian's Stats</h2>
+      <div class="stat-item">Current State: <strong>Safe</strong></div>
+      <div class="stat-item">Body Temperature: <strong>36.7°C</strong></div>
+      <div class="stat-item">Brain Health: <strong>Healthy</strong></div>
+      <div class="stat-item">Alpha-Delta-Raw: <strong>0.0</strong></div>
+      <div class="stat-item">Beta-Theta-Raw: <strong>0.0</strong></div>
+      <div class="stat-item">Theta-Alpha-Raw: <strong>0.0</strong></div>
+      <div class="stat-item">Alpha-Delta: <strong>Healthy</strong></div>
+      <div class="stat-item">Beta-Theta: <strong>Healthy</strong></div>
+      <div class="stat-item">Theta-Alpha: <strong>Healthy</strong></div>
+    </div>
+
+    <script>
+      function toggleDrawer() {
+        const drawer = document.getElementById("navDrawer");
+        const overlay = document.getElementById("overlay");
+        const isOpen = drawer.classList.contains("open");
+
+        if (isOpen) {
+          drawer.classList.remove("open");
+          overlay.classList.remove("show");
+        } else {
+          drawer.classList.add("open");
+          overlay.classList.add("show");
+        }
+      }
+      async function updateStats() {
+        try {
+          const res = await fetch("http://10.0.0.213:5000/status"); // or localhost if testing locally
+          const data = await res.json();
+
+          // Update camera classification state
+          document
+            .querySelectorAll(".stat-item")[0]
+            .querySelector("strong").textContent =
+            data.classification || "Unknown";
+
+          // Update overall brain health
+          document
+            .querySelectorAll(".stat-item")[2]
+            .querySelector("strong").textContent = getOverallBrainStatus(
+            data.eeg_values
+          );
+
+          // Update each metric result (simple labels)
+          document
+            .querySelectorAll(".stat-item")[3]
+            .querySelector("strong").textContent =
+            data.eeg_values["alpha-delta"]?.toFixed(2) || "0.0";
+          document
+            .querySelectorAll(".stat-item")[4]
+            .querySelector("strong").textContent =
+            data.eeg_values["beta-theta"]?.toFixed(2) || "0.0";
+          document
+            .querySelectorAll(".stat-item")[5]
+            .querySelector("strong").textContent =
+            data.eeg_values["theta-alpha"]?.toFixed(2) || "0.0";
+
+          document
+            .querySelectorAll(".stat-item")[6]
+            .querySelector("strong").textContent = getLabel(
+            data.eeg_values["alpha-delta-result"]
+          );
+          document
+            .querySelectorAll(".stat-item")[7]
+            .querySelector("strong").textContent = getLabel(
+            data.eeg_values["beta-theta-result"]
+          );
+          document
+            .querySelectorAll(".stat-item")[8]
+            .querySelector("strong").textContent = getLabel(
+            data.eeg_values["theta-alpha-result"]
+          );
+        } catch (err) {
+          console.error("❌ Failed to fetch EEG/cam status:", err);
+        }
+      }
+
+      function getLabel(result) {
+        // if (!result) return "Unknown";
+        // if (result.includes("abnormal") || result.includes("underactivity"))
+        //   return "Unhealthy";
+        // if (result.includes("deep sleep") || result.includes("transitional"))
+        //   return "Neutral";
+        // return "Healthy";
+        return result;
+      }
+
+      function getOverallBrainStatus(values) {
+        const results = [
+          values["alpha-delta-result"],
+          values["beta-theta-result"],
+          values["theta-alpha-result"],
+        ];
+        if (results.some((r) => r && r.includes("abnormal")))
+          return "Unhealthy";
+        if (results.every((r) => r && r.includes("healthy"))) return "Healthy";
+        return "Healthy";
+      }
+
+      updateStats();
+      setInterval(updateStats, 1500); // update every 3 seconds
+    </script>
+  </body>
+</html>
